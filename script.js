@@ -10,6 +10,8 @@ let displayGrid = document.querySelector('.display-grid')
 let container = document.createElement('div')
 let inputSection = document.querySelector('.input-section')
 
+// --- create elements based on the cols and rows of the grid,
+//     then return the 2D matrix
 function makeGrid(cols, rows) {
     let column = []
     for (let c = 0; c < cols; c++) {
@@ -24,10 +26,12 @@ function makeGrid(cols, rows) {
     return column
 }
 
+// --- reset the current grid objects matrix, then remake the grid,
+//     + loop over the new grid objects matrix to then append
+//       cells that can be hovered to change (draw) the color onto
 function displayMatrix() {
     grid.matrix = []
     grid.matrix = makeGrid(grid.cols, grid.rows)
-    console.log(grid)
 
     container.classList.add('matrix', 'parent')
     container.style.setProperty('--grid-rows', grid.rows)
