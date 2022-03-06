@@ -55,6 +55,8 @@ slider.setAttribute('max', '100')
 slider.setAttribute('value', `${grid.cols}`)
 let clearMatrixBtn = document.createElement('button')
 let drawMatrixBtn = document.createElement('button')
+drawMatrixBtn.setAttribute('disabled', 'true')
+drawMatrixBtn.setAttribute('id', 'drawBtn')
 clearMatrixBtn.innerText = "Clear"
 drawMatrixBtn.innerText = "Draw Matrix"
 let colorPicker = document.createElement('input')
@@ -88,11 +90,15 @@ function clearCells(m) {
             container.removeChild(ce)
         })
     })
+    document.getElementById('drawBtn').disabled = true
     displayMatrix()
 }
 // --- update the grid size from the input value of the slider
 function setGridSize() {
     let val = document.getElementById('slider').value
+    if (val !== grid.cols) {
+        document.getElementById('drawBtn').disabled = false
+    }
     grid.cols = val
     grid.rows = val
 }
