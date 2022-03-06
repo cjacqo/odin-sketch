@@ -24,7 +24,10 @@ function makeGrid() {
 function countHover(cell) {
     let count = parseInt(cell.getAttribute('data-count'))
     count++
-    cell.setAttribute('data-count', `${count}`)
+    if (count < 9) {
+        cell.style.backgroundColor = `rgba(0,0,0,0.${count})`
+        cell.setAttribute('data-count', `${count}`)
+    }
 }
 
 function displayMatrix(m) {
@@ -32,9 +35,18 @@ function displayMatrix(m) {
     container.classList.add('matrix', 'parent')
     container.style.setProperty('--grid-rows', grid.rows)
     container.style.setProperty('--grid-cols', grid.cols)
+
+    // let clearMatrixBtn = document.createElement('button')
+    // clearMatrixBtn.innerText = "Clear"
+
+    // clearMatrixBtn.addEventListener('click', () => {
+    //     displayMatrix(grid.matrix)
+    // })
+    
     m.forEach(el => {
         el.map(ce => {
-            ce.setAttribute('data-count', '0')
+            ce.style.backgroundColor = `rgba(0,0,0,0)`
+            ce.setAttribute('data-count', `0`)
             ce.addEventListener('mouseover', () => {
                 countHover(ce)
             })
@@ -42,6 +54,7 @@ function displayMatrix(m) {
         })
     })
     displayGrid.appendChild(container)
+    displayGrid.appendChild(clearMatrixBtn)
 }
 
 grid.matrix = makeGrid()
