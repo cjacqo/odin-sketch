@@ -21,13 +21,23 @@ function makeGrid() {
     return column
 }
 
+function countHover(cell) {
+    let count = parseInt(cell.getAttribute('data-count'))
+    count++
+    cell.setAttribute('data-count', `${count}`)
+}
+
 function displayMatrix(m) {
     let container = document.createElement('div')
     container.classList.add('matrix', 'parent')
     container.style.setProperty('--grid-rows', grid.rows)
     container.style.setProperty('--grid-cols', grid.cols)
     m.forEach(el => {
-        el.forEach(ce => {
+        el.map(ce => {
+            ce.setAttribute('data-count', '0')
+            ce.addEventListener('mouseover', () => {
+                countHover(ce)
+            })
             container.appendChild(ce)
         })
     })
