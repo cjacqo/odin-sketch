@@ -1,8 +1,27 @@
+/* ___ GLOBAL ___ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    width: 100vw;
+    height: 100vh;
+}
+
+body {
+    width: 95%;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
 .matrix {
     height: 500px;
-    width: 700px;
+    width: 100%;
     display: grid;
-    grid-gap: 5px;
     grid-template-rows: repeat(var(--grid-rows), 1fr);
     grid-template-columns: repeat(var(--grid-cols), 1fr);
     border: 1px solid black;
