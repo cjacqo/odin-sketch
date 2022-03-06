@@ -1,9 +1,3 @@
-let c = {
-    r: 0,
-    g: 0,
-    b: 0
-}
-
 let grid = {
     cols: 16,
     rows: 16,
