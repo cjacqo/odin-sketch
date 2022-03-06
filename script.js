@@ -1,17 +1,19 @@
 let grid = {
     cols: 16,
     rows: 16,
-    matrix: []
+    matrix: [],
+    clear: false
 }
 
 let displayGrid = document.querySelector('.display-grid')
+let container = document.createElement('div')
 let inputSection = document.querySelector('.input-section')
 
-function makeGrid() {
+function makeGrid(cols, rows) {
     let column = []
-    for (let c = 0; c < grid.cols; c++) {
+    for (let c = 0; c < cols; c++) {
         let row = []
-        for (let r = 0; r < grid.rows; r++) {
+        for (let r = 0; r < rows; r++) {
             let div = document.createElement('div')
             div.classList.add('cell')
             row.push(div)
@@ -31,9 +33,10 @@ function countHover(cell) {
 }
 
 function displayMatrix() {
-    grid.matrix = makeGrid()
+    grid.matrix = []
+    grid.matrix = makeGrid(grid.cols, grid.rows)
+    console.log(grid)
 
-    let container = document.createElement('div')
     container.classList.add('matrix', 'parent')
     container.style.setProperty('--grid-rows', grid.rows)
     container.style.setProperty('--grid-cols', grid.cols)
@@ -51,31 +54,50 @@ function displayMatrix() {
     displayGrid.appendChild(container)
 }
 
+let slider = document.createElement('input')
+slider.setAttribute('type', 'range')
+slider.setAttribute('id', 'slider')
+slider.setAttribute('min', '16')
+slider.setAttribute('max', '100')
+slider.setAttribute('value', `${grid.cols}`)
 let clearMatrixBtn = document.createElement('button')
+let drawMatrixBtn = document.createElement('button')
 clearMatrixBtn.innerText = "Clear"
+drawMatrixBtn.innerText = "Draw Matrix"
 
+// EVENT LISTENERS
+// --- get the value of the slider to set the grid size
+slider.oninput = function() {
+    setGridSize()
+}
+// --- erase the entire board
 clearMatrixBtn.addEventListener('click', () => {
-    grid.matrix.forEach(el => {
-        el.map(ce => {
-            ce.style.backgroundColor = `rgba(0,0,0,0)`
-            ce.setAttribute('data-count', `0`)
-        })
-    })
-
+    clearCells(grid.matrix)
+})
+// --- draw the board
+drawMatrixBtn.addEventListener('click', () => {
+    clearCells(grid.matrix)
 })
 
-// slider.setAttribute('type', 'range')
-// slider.setAttribute('min', '1')
-// slider.setAttribute('max', '100')
-// slider.setAttribute('value', `${grid.cols}`)
-// slider.oninput = function() {
-//     grid.cols = this.value
-//     grid.rows = this.value
-// }
-// inputSection.appendChild(slider)
-
-
+// FUNCTIONS
+// --- reset each cell in the matrix to default values
+function clearCells(m) {
+    m.forEach(el => {
+        el.map(ce => {
+            container.removeChild(ce)
+        })
+    })
+    displayMatrix()
+}
+// --- update the grid size from the input value of the slider
+function setGridSize() {
+    let val = document.getElementById('slider').value
+    grid.cols = val
+    grid.rows = val
+}
 
 displayMatrix()
 
-displayGrid.appendChild(clearMatrixBtn)
+inputSection.appendChild(slider)
+inputSection.appendChild(clearMatrixBtn)
+inputSection.appendChild(drawMatrixBtn)
