@@ -5,6 +5,7 @@ let grid = {
 }
 
 let displayGrid = document.querySelector('.display-grid')
+let inputSection = document.querySelector('.input-section')
 
 function makeGrid() {
     let column = []
@@ -62,6 +63,18 @@ clearMatrixBtn.addEventListener('click', () => {
     })
 
 })
+
+// slider.setAttribute('type', 'range')
+// slider.setAttribute('min', '1')
+// slider.setAttribute('max', '100')
+// slider.setAttribute('value', `${grid.cols}`)
+// slider.oninput = function() {
+//     grid.cols = this.value
+//     grid.rows = this.value
+// }
+// inputSection.appendChild(slider)
+
+
 
 displayMatrix()
 
