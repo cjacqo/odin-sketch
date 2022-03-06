@@ -6,7 +6,6 @@ let grid = {
 
 let displayGrid = document.querySelector('.display-grid')
 
-
 function makeGrid() {
     let column = []
     for (let c = 0; c < grid.cols; c++) {
@@ -30,20 +29,15 @@ function countHover(cell) {
     }
 }
 
-function displayMatrix(m) {
+function displayMatrix() {
+    grid.matrix = makeGrid()
+
     let container = document.createElement('div')
     container.classList.add('matrix', 'parent')
     container.style.setProperty('--grid-rows', grid.rows)
     container.style.setProperty('--grid-cols', grid.cols)
-
-    // let clearMatrixBtn = document.createElement('button')
-    // clearMatrixBtn.innerText = "Clear"
-
-    // clearMatrixBtn.addEventListener('click', () => {
-    //     displayMatrix(grid.matrix)
-    // })
     
-    m.forEach(el => {
+    grid.matrix.forEach(el => {
         el.map(ce => {
             ce.style.backgroundColor = `rgba(0,0,0,0)`
             ce.setAttribute('data-count', `0`)
@@ -54,9 +48,21 @@ function displayMatrix(m) {
         })
     })
     displayGrid.appendChild(container)
-    displayGrid.appendChild(clearMatrixBtn)
 }
 
-grid.matrix = makeGrid()
+let clearMatrixBtn = document.createElement('button')
+clearMatrixBtn.innerText = "Clear"
 
-displayMatrix(grid.matrix)
+clearMatrixBtn.addEventListener('click', () => {
+    grid.matrix.forEach(el => {
+        el.map(ce => {
+            ce.style.backgroundColor = `rgba(0,0,0,0)`
+            ce.setAttribute('data-count', `0`)
+        })
+    })
+
+})
+
+displayMatrix()
+
+displayGrid.appendChild(clearMatrixBtn)
