@@ -3,7 +3,8 @@ let grid = {
     rows: 16,
     color: `rgba(0, 0, 0, 0)`,
     matrix: [],
-    clear: false
+    clear: false,
+    state: 'drawing'
 }
 
 let displayGrid = document.querySelector('.display-grid')
@@ -75,6 +76,14 @@ roundColor.setAttribute('id', 'colorWrapper')
 roundColor.style.backgroundColor = '#000000'
 
 // EVENT LISTENERS
+// --- set the state for user to 'drawing'
+drawBtn.addEventListener('click', () => {
+    setState('drawing')
+})
+// --- set the state for user to 'erasing'
+eraserBtn.addEventListener('click', () => {
+    setState('erasing')
+})
 // --- get the value of the slider to set the grid size
 slider.oninput = function() {
     setGridSize()
@@ -124,11 +133,19 @@ function countHover(cell) {
     let values = color.substring(5, color.length - 1).split(',')
 
     // --- add to how many times a cell has been hovered to shade the cell
-    count++
+    if (grid.state === 'drawing') {
+        count++
+    } else if (grid.state === 'erasing') {
+        count--
+    }
     if (count < 9) {
         cell.style.backgroundColor = `rgba(${values[0]},${values[1]},${values[2]},0.${count})`
         cell.setAttribute('data-count', `${count}`)
     }
+}
+// --- set action state for user
+function setState(value) {
+    grid.state = value
 }
 
 // HELPER FUNCTIONS
