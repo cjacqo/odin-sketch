@@ -9,6 +9,7 @@ let grid = {
 let displayGrid = document.querySelector('.display-grid')
 let container = document.createElement('div')
 let inputSection = document.querySelector('.input-section')
+let sldierSection = document.querySelector('.slider-section')
 
 // --- create elements based on the cols and rows of the grid,
 //     then return the 2D matrix
@@ -137,6 +138,6 @@ function hexToRgbA(hex) {
 
 displayMatrix()
 
-inputSection.appendChild(slider)
+sldierSection.appendChild(slider)
 inputSection.appendChild(clearMatrixBtn)
 inputSection.appendChild(colorPicker)
