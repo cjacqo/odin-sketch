@@ -68,12 +68,6 @@ function displayMatrix() {
 }
 
 // INPUT ELEMENTS, BUTTONS & ATTRIBUTES
-let slider = document.createElement('input')
-slider.setAttribute('type', 'range')
-slider.setAttribute('id', 'slider')
-slider.setAttribute('min', '16')
-slider.setAttribute('max', '100')
-slider.setAttribute('value', `${grid.cols}`)
 let drawBtn = document.createElement('button')
 drawBtn.innerHTML = `<i class="fa-solid fa-paintbrush"></i>`
 drawBtn.style.color = 'green'
@@ -93,6 +87,14 @@ colorPicker.setAttribute('value', 'rgba(0,0,0,0)')
 let roundColor = document.createElement('div')
 roundColor.setAttribute('id', 'colorWrapper')
 roundColor.style.backgroundColor = '#000000'
+let slider = document.createElement('input')
+slider.setAttribute('type', 'range')
+slider.setAttribute('id', 'slider')
+slider.setAttribute('min', '16')
+slider.setAttribute('max', '100')
+slider.setAttribute('value', `${grid.cols}`)
+let gridSizeTextContainer = document.createElement('div')
+gridSizeTextContainer.innerHTML = `<p class="text">${grid.cols} x ${grid.rows}</p>`
 
 // EVENT LISTENERS
 // --- set the state for user to 'drawing'
@@ -142,6 +144,7 @@ function clearCells(m) {
 // --- update the grid size from the input value of the slider
 function setGridSize() {
     let val = document.getElementById('slider').value
+    gridSizeTextContainer.innerHTML = `<p class="text">${val} x ${val}</p>`
     grid.cols = val
     grid.rows = val
 }
@@ -151,6 +154,10 @@ function setColor() {
     let rgba = hexToRgbA(val)
     // --- update the round background-color
     roundColor.style.backgroundColor = val
+    if (grid.rainbowOn) {
+        grid.rainbowOn = false
+        rainbowBtn.style.color = 'black'
+    }
     grid.color = rgba
 }
 // --- hover the cell to draw
@@ -244,6 +251,7 @@ function getRandomColor() {
 
 displayMatrix()
 
+sliderSection.appendChild(gridSizeTextContainer)
 sliderSection.appendChild(slider)
 inputSection.appendChild(drawBtn)
 inputSection.appendChild(eraserBtn)
