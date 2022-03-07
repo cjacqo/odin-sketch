@@ -55,7 +55,9 @@ body {
 .input-section {
     display: flex;
     flex-direction: column;
+    align-items: center;
     margin: 2rem 1rem 0 0;
+    gap: 1rem;
 }
 
 input {
@@ -86,6 +88,25 @@ input::-moz-range-thumb {
     height: 25px;
     background: #04AA6D;
     cursor: pointer;
+}
+
+/* COLOR */
+#color {
+    opacity: 0;
+	display: block;
+	width: 32px;
+	height: 32px;
+	border: none;
+}
+
+#colorWrapper {
+    position: relative;
+    top: calc(-1rem - 32px);
+    z-index: -1;
+    float: left;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
 }
 
 /* SLIDER */

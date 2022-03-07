@@ -9,7 +9,7 @@ let grid = {
 let displayGrid = document.querySelector('.display-grid')
 let container = document.createElement('div')
 let inputSection = document.querySelector('.input-section')
-let sldierSection = document.querySelector('.slider-section')
+let sliderSection = document.querySelector('.slider-section')
 
 // --- create elements based on the cols and rows of the grid,
 //     then return the 2D matrix
@@ -64,6 +64,9 @@ let colorPicker = document.createElement('input')
 colorPicker.setAttribute('type', 'color')
 colorPicker.setAttribute('id', 'color')
 colorPicker.setAttribute('value', 'rgba(0,0,0,0)')
+let roundColor = document.createElement('div')
+roundColor.setAttribute('id', 'colorWrapper')
+roundColor.style.backgroundColor = '#000000'
 
 // EVENT LISTENERS
 // --- get the value of the slider to set the grid size
@@ -100,6 +103,8 @@ function setGridSize() {
 function setColor() {
     let val = document.getElementById('color').value
     let rgba = hexToRgbA(val)
+    // --- update the round background-color
+    roundColor.style.backgroundColor = val
     grid.color = rgba
 }
 // --- hover the cell to draw
@@ -138,6 +143,7 @@ function hexToRgbA(hex) {
 
 displayMatrix()
 
-sldierSection.appendChild(slider)
+sliderSection.appendChild(slider)
 inputSection.appendChild(clearMatrixBtn)
 inputSection.appendChild(colorPicker)
+inputSection.appendChild(roundColor)
