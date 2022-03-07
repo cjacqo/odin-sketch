@@ -6,13 +6,22 @@ let grid = {
     clear: false,
     state: 'drawing',
     rainbowOn: false,
-    shaderOn: false
+    shaderOn: false,
+    isDrawing: false
 }
 
 let displayGrid = document.querySelector('.display-grid')
 let container = document.createElement('div')
 let inputSection = document.querySelector('.input-section')
 let sliderSection = document.querySelector('.slider-section')
+
+// --- click listener to track when user is trying to alter the drawing
+container.addEventListener('mousedown', () => {
+    grid.isDrawing = true
+})
+container.addEventListener('mouseup', () => {
+    grid.isDrawing = false
+})
 
 // --- create elements based on the cols and rows of the grid,
 //     then return the 2D matrix
@@ -47,7 +56,10 @@ function displayMatrix() {
             ce.setAttribute('data-count', `0`)
             ce.setAttribute('is-filled', 'false')
             ce.addEventListener('mouseover', () => {
-                countHover(ce)
+                if (grid.isDrawing) {
+                    countHover(ce)
+                }
+                return
             })
             container.appendChild(ce)
         })

@@ -33,6 +33,7 @@ body {
 .display-grid {
     display: flex;
     position: relative;
+    cursor: pointer;
 }
 
 .matrix {
