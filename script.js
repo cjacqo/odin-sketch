@@ -61,6 +61,7 @@ slider.setAttribute('max', '100')
 slider.setAttribute('value', `${grid.cols}`)
 let drawBtn = document.createElement('button')
 drawBtn.innerHTML = `<i class="fa-solid fa-paintbrush"></i>`
+drawBtn.style.color = 'green'
 let clearMatrixBtn = document.createElement('button')
 clearMatrixBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i>`
 let eraserBtn = document.createElement('button')
@@ -146,6 +147,8 @@ function countHover(cell) {
 // --- set action state for user
 function setState(value) {
     grid.state = value
+    drawBtn.style.color = value === 'drawing' ? 'green' : 'black'
+    eraserBtn.style.color = value === 'erasing' ? 'pink' : 'black'
 }
 
 // HELPER FUNCTIONS
