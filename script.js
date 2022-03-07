@@ -4,7 +4,8 @@ let grid = {
     color: `rgba(0, 0, 0, 0)`,
     matrix: [],
     clear: false,
-    state: 'drawing'
+    state: 'drawing',
+    rainbowOn: false
 }
 
 let displayGrid = document.querySelector('.display-grid')
@@ -98,6 +99,12 @@ colorPicker.oninput = function() {
 clearMatrixBtn.addEventListener('click', () => {
     clearCells(grid.matrix)
 })
+// --- turn rainbow feature on
+rainbowBtn.addEventListener('click', () => {
+    grid.rainbowOn = !grid.rainbowOn
+    rainbowBtn.style.color = grid.rainbowOn ? 'purple' : 'black'
+    console.log(grid)
+})
 
 // FUNCTIONS
 // --- reset each cell in the matrix to default values
@@ -131,7 +138,15 @@ function countHover(cell) {
 
     // --- extract values from grid.color
     let { color } = grid
-    let values = color.substring(5, color.length - 1).split(',')
+    let values
+
+    // --- check if rainbow setting is on
+    if (grid.rainbowOn) {
+        rgbaString = getRandomColor()
+        values = rgbaString.substring(5, rgbaString.length - 1).split(',')
+    } else {
+        values = color.substring(5, color.length - 1).split(',')
+    }
 
     // --- add to how many times a cell has been hovered to shade the cell
     if (grid.state === 'drawing') {
@@ -165,6 +180,13 @@ function hexToRgbA(hex) {
         return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',0)'
     }
     throw new Error('Bad Hex')
+}
+// --- generate a random rgba string
+function getRandomColor() {
+    let r = Math.floor(Math.random() * 255)
+    let g = Math.floor(Math.random() * 255)
+    let b = Math.floor(Math.random() * 255)
+    return `rgba(${r}, ${g}, ${b}, 0)`
 }
 
 displayMatrix()
