@@ -90,6 +90,33 @@ input::-moz-range-thumb {
     cursor: pointer;
 }
 
+/* BUTTONS */
+button {
+    background-color: transparent;
+    border: none;
+}
+
+button > i {
+    font-size: 32px;
+}
+
+/* --- brush */
+.fa-paintbrush:hover {
+    color: green;
+}
+/* --- trash */
+.fa-trash-can:hover {
+    color: red;
+}
+/* --- erase */
+.fa-eraser:hover {
+    color: pink;
+}
+/* --- rainbow */
+.fa-rainbow:hover {
+    color: purple;
+}
+
 /* COLOR */
 #color {
     opacity: 0;

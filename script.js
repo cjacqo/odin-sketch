@@ -58,8 +58,14 @@ slider.setAttribute('id', 'slider')
 slider.setAttribute('min', '16')
 slider.setAttribute('max', '100')
 slider.setAttribute('value', `${grid.cols}`)
+let drawBtn = document.createElement('button')
+drawBtn.innerHTML = `<i class="fa-solid fa-paintbrush"></i>`
 let clearMatrixBtn = document.createElement('button')
-clearMatrixBtn.innerText = "Clear"
+clearMatrixBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i>`
+let eraserBtn = document.createElement('button')
+eraserBtn.innerHTML = `<i class="fa-solid fa-eraser"></i>`
+let rainbowBtn = document.createElement('button')
+rainbowBtn.innerHTML = `<i class="fa-solid fa-rainbow"></i>`
 let colorPicker = document.createElement('input')
 colorPicker.setAttribute('type', 'color')
 colorPicker.setAttribute('id', 'color')
@@ -144,6 +150,9 @@ function hexToRgbA(hex) {
 displayMatrix()
 
 sliderSection.appendChild(slider)
+inputSection.appendChild(drawBtn)
+inputSection.appendChild(eraserBtn)
 inputSection.appendChild(clearMatrixBtn)
+inputSection.appendChild(rainbowBtn)
 inputSection.appendChild(colorPicker)
 inputSection.appendChild(roundColor)
