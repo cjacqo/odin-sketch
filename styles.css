@@ -94,6 +94,7 @@ input::-moz-range-thumb {
 button {
     background-color: transparent;
     border: none;
+    cursor: pointer;
 }
 
 button > i {
@@ -115,6 +116,14 @@ button > i {
 /* --- rainbow */
 .fa-rainbow:hover {
     color: purple;
+}
+/* --- shader */
+/* .fa-circle-half-stroke {
+    color: #ccc;
+} */
+
+.fa-circle-half-stroke:hover {
+    color: #aaa;
 }
 
 /* COLOR */

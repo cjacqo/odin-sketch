@@ -5,7 +5,8 @@ let grid = {
     matrix: [],
     clear: false,
     state: 'drawing',
-    rainbowOn: false
+    rainbowOn: false,
+    shaderOn: false
 }
 
 let displayGrid = document.querySelector('.display-grid')
@@ -44,6 +45,7 @@ function displayMatrix() {
         el.map(ce => {
             ce.style.backgroundColor = `rgba(0,0,0,0)`
             ce.setAttribute('data-count', `0`)
+            ce.setAttribute('is-filled', 'false')
             ce.addEventListener('mouseover', () => {
                 countHover(ce)
             })
@@ -69,6 +71,9 @@ let eraserBtn = document.createElement('button')
 eraserBtn.innerHTML = `<i class="fa-solid fa-eraser"></i>`
 let rainbowBtn = document.createElement('button')
 rainbowBtn.innerHTML = `<i class="fa-solid fa-rainbow"></i>`
+let shaderBtn = document.createElement('button')
+shaderBtn.style.color = '#CCCCCC'
+shaderBtn.innerHTML = `<i class="fa-solid fa-circle-half-stroke"></i>`
 let colorPicker = document.createElement('input')
 colorPicker.setAttribute('type', 'color')
 colorPicker.setAttribute('id', 'color')
@@ -105,6 +110,12 @@ rainbowBtn.addEventListener('click', () => {
     rainbowBtn.style.color = grid.rainbowOn ? 'purple' : 'black'
     console.log(grid)
 })
+// --- enable the shade feature
+shaderBtn.addEventListener('click', () => {
+    grid.shaderOn = !grid.shaderOn
+    console.log("Hi")
+    shaderBtn.style.color = grid.shaderOn ? 'black' : '#ccc'
+})
 
 // FUNCTIONS
 // --- reset each cell in the matrix to default values
@@ -133,31 +144,61 @@ function setColor() {
 // --- hover the cell to draw
 //     + will track the amount of times to darken the cell,
 //       as well as track the selected color
+//     + controls features and settings for how to color a cell
 function countHover(cell) {
     let count = parseInt(cell.getAttribute('data-count'))
+    let isFilled = cell.getAttribute('is-filled')
 
     // --- extract values from grid.color
     let { color } = grid
     let values
 
-    // --- check if rainbow setting is on
-    if (grid.rainbowOn) {
-        rgbaString = getRandomColor()
-        values = rgbaString.substring(5, rgbaString.length - 1).split(',')
-    } else {
-        values = color.substring(5, color.length - 1).split(',')
+    // --- check if isFilled is true
+    switch(isFilled) {
+        case 'true':
+            if (grid.state === 'erasing') {
+                cell.style.backgroundColor = `rgba(0,0,0,0)`
+                cell.setAttribute('is-filled', 'false')
+            }
+            return
+        case 'false':
+            if (grid.state === 'erasing') {
+                cell.style.backgroundColor = `rgba(0,0,0,0)`
+                cell.setAttribute('is-filled', 'false')
+            } else {
+                // - check 1) check for rainbow mode to determine color
+                if (grid.rainbowOn) {
+                    rgbaString = getRandomColor()
+                    values = rgbaString.substring(5, rgbaString.length - 1).split(',')
+                } else {
+                    values = color.substring(5, color.length - 1).split(',')
+                }
+
+                // - check 2) shader is on
+                if (grid.shaderOn) {
+                    // --- check if cells background color is not white
+                    if (isFilled === 'true') {
+                        return
+                    } else {
+                        count++
+                        if (count === 9) {
+                            cell.style.backgroundColor = `rgba(${values[0]},${values[1]},${values[2]},${1})`
+                            cell.setAttribute('is-filled', 'true')
+                        }
+                        cell.style.backgroundColor = `rgba(${values[0]},${values[1]},${values[2]},0.${count})`
+                        cell.setAttribute('data-count', `${count}`)
+                    }
+                } else {
+                    count = 1
+                    cell.style.backgroundColor = `rgba(${values[0]},${values[1]},${values[2]},${1})`
+                    cell.setAttribute('data-count', `${count}`)
+                    cell.setAttribute('is-filled', 'true')
+                }
+            }
+        default:
+            return
     }
 
-    // --- add to how many times a cell has been hovered to shade the cell
-    if (grid.state === 'drawing') {
-        count++
-    } else if (grid.state === 'erasing') {
-        count = 0
-    }
-    if (count < 9) {
-        cell.style.backgroundColor = `rgba(${values[0]},${values[1]},${values[2]},0.${count})`
-        cell.setAttribute('data-count', `${count}`)
-    }
 }
 // --- set action state for user
 function setState(value) {
@@ -196,5 +237,6 @@ inputSection.appendChild(drawBtn)
 inputSection.appendChild(eraserBtn)
 inputSection.appendChild(clearMatrixBtn)
 inputSection.appendChild(rainbowBtn)
+inputSection.appendChild(shaderBtn)
 inputSection.appendChild(colorPicker)
 inputSection.appendChild(roundColor)
