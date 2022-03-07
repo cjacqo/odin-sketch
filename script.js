@@ -152,7 +152,7 @@ function countHover(cell) {
     if (grid.state === 'drawing') {
         count++
     } else if (grid.state === 'erasing') {
-        count--
+        count = 0
     }
     if (count < 9) {
         cell.style.backgroundColor = `rgba(${values[0]},${values[1]},${values[2]},0.${count})`
